@@ -1,0 +1,31 @@
+<div id="layout-sidebar">
+    <div id="layout-sidebar-header">Variants</div>
+    <div id="layout-sidebar-content">
+        <table cellpadding=3 cellspacing=0 id="Catalogue" style="width:100%"></table>
+        <div id="AnimalWindow" class="animalWindow">
+            <ul id="AnimalList" class="animalList"></ul>
+        </div>
+        <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
+            <div style="font-weight: bold; margin-bottom: 5px; color: var(--text-muted); font-size: 10px;">SOLITONS
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                <input type="button" class="btnSoliton" value="Center" title="Add soliton at center (Z)"
+                    onclick="actionKey='Z';this.blur();">
+                <input type="button" class="btnSoliton" value="Sprinkle" title="Add soliton at random (X)"
+                    onclick="actionKey='X';this.blur();">
+                <input type="button" class="btnSoliton" value="Prev" title="Add previous soliton (C or keypad 1)"
+                    onclick="actionKey='C';this.blur();">
+                <input type="button" class="btnSoliton" value="Next" title="Add next soliton (V or keypad 2)"
+                    onclick="actionKey='V';this.blur();">
+                <input type="button" class="btnSoliton" value="[+]All" title="Expand all soliton groups"
+                    onclick="actionKey=INT+3;this.blur();">
+                <input type="button" class="btnSoliton" value="[−]All" title="Collapse all soliton groups"
+                    onclick="actionKey=INT+4;this.blur();">
+            </div>
+            <div style="margin-top: 5px;">
+                Options: <input type="button" class="btnOption" id="optAnimalX" value=""
+                    title="Enlarge soliton when added (B or keypad 3)" onclick="actionKey='B';this.blur();">
+            </div>
+        </div>
+    </div>
+</div>

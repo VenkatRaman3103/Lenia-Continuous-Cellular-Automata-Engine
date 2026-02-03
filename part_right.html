@@ -1,0 +1,384 @@
+<div id="layout-controls">
+    <!-- 1️⃣ Static System Status Block (Always Visible) -->
+    <div id="status-block">
+        <div class="stat-row"><span class="label">&mu;</span><span id="txt_c" class="value bright"></span></div>
+        <div class="stat-row"><span class="label">&sigma;</span><span id="txt_w" class="value bright"></span>
+        </div>
+        <div class="stat-row"><span class="label">R</span><span id="txt_R" class="value"></span></div>
+        <div class="stat-row"><span class="label">T</span><span id="txt_ts" class="value"></span></div>
+        <div class="stat-row"><span class="label">&beta;</span><span id="txt_B" class="value"></span></div>
+        <div class="stat-row"><span class="label">&eta;</span><span id="txt_E" class="value"></span></div>
+        <div class="stat-row"><span class="label">&Delta;t</span><span class="value"><span id="txt_dt"></span>
+                &mu;s</span></div>
+        <div class="stat-row"><span class="label">t</span><span class="value"><span id="txt_t"></span>
+                &mu;s</span></div>
+        <div class="stat-row"><span class="label">Field size</span><span id="txt_size" class="value"></span>
+        </div>
+        <div class="stat-row"><span class="label">FPS</span><span id="txt_fps" class="value"></span></div>
+        <div class="stat-row"><span class="label">Period</span><span id="txt_period" class="value"></span></div>
+        <div class="stat-row"><span class="label">Mass</span><span class="value">log scale</span></div>
+    </div>
+
+    <!-- 2️⃣ Tab Navigation (Panel Switcher) -->
+    <div id="tab-row">
+        <button id="CtrlBtn" class="tab-btn" onclick="actionKey='1';this.blur();">Controls</button>
+        <button id="CalcBtn" class="tab-btn" onclick="actionKey='2';this.blur();">Calculations</button>
+        <button id="StatBtn" class="tab-btn" onclick="actionKey='3';this.blur();">Statistics</button>
+        <button id="PlotBtn" class="tab-btn" onclick="actionKey='4';this.blur();">3D Plot</button>
+        <button id="CubeBtn" class="tab-btn" onclick="actionKey='5';this.blur();">&beta; Cube</button>
+        <button id="InfoBtn" class="tab-btn" onclick="actionKey=192;this.blur();">About</button>
+    </div>
+
+    <div id="dynamic-content">
+        <!-- ℹ️ Info Panel -->
+        <div id="InfoPanel" class="scrollOut" style="display:none">
+            <div class="scrollIn">
+                <div class="control-group">
+                    <div class="group-title">About Lenia</div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <img src="logo.png" style="width: 32px; height: 32px;">
+                        <div>
+                            <div class="mainTitle" style="font-size: 18px; margin: 0;">Lenia</div>
+
+                        </div>
+                    </div>
+                    <div class="infoText">
+                        Artificial Life in 2D Continuous Cellular Automata. Lenia generalizes continuous CA into
+                        "kernel" and "delta" functions, allowing naturalistic life forms to reside in a virtual
+                        world.
+                    </div>
+                    <input type="button" value="Start playing!" class="btnHigh full-width"
+                        onclick="actionKey='1';this.blur();">
+                </div>
+            </div>
+        </div>
+
+        <!-- ⚙️ Controls Panel -->
+        <div id="CtrlPanel" class="scrollOut" style="display:none">
+            <div class="scrollIn">
+                <div class="control-group">
+                    <div class="group-title">Run Controls</div>
+                    <div class="btn-cluster full-width">
+                        <input type="button" class="btnRun" value="Start/Stop" onclick="actionKey=13;this.blur();"
+                            style="flex:1">
+                        <input type="button" class="btnRun" value="Once" onclick="actionKey=32;this.blur();"
+                            style="flex:1">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="group-title">Core Parameters</div>
+                    <div class="param-row">
+                        <span class="param-label">&mu; (Center)</span>
+                        <div class="btn-cluster">
+                            <input type="button" value="−" onclick="actionKey='A';this.blur();">
+                            <input type="button" value="+" onclick="actionKey='Q';this.blur();">
+                            <span id="txt_c_ctrl" class="value"
+                                style="width: 50px; display: inline-block; text-align: right;"></span>
+                        </div>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-label">&sigma; (Width)</span>
+                        <div class="btn-cluster">
+                            <input type="button" value="−" onclick="actionKey='S';this.blur();">
+                            <input type="button" value="+" onclick="actionKey='W';this.blur();">
+                            <span id="txt_w_ctrl" class="value"
+                                style="width: 50px; display: inline-block; text-align: right;"></span>
+                        </div>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-label">R (Resolution)</span>
+                        <div class="btn-cluster">
+                            <input type="button" value="−" onclick="actionKey='[';this.blur();">
+                            <input type="button" value="+" onclick="actionKey=']';this.blur();">
+                            <span id="txt_R_ctrl" class="value"
+                                style="width: 50px; display: inline-block; text-align: right;"></span>
+                        </div>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-label">T (Time Step)</span>
+                        <div class="btn-cluster">
+                            <input type="button" value="−" onclick="actionKey='G';this.blur();">
+                            <input type="button" value="+" onclick="actionKey='T';this.blur();">
+                            <span id="txt_ts_ctrl" class="value"
+                                style="width: 50px; display: inline-block; text-align: right;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="group-title">Presets</div>
+                    <div class="btn-cluster full-width" style="flex-wrap: wrap;">
+                        <input type="button" class="btnRun small" value="Lenia" onclick="actionKey='6';this.blur();">
+                        <input type="button" class="btnRun small" value="SmoothLife"
+                            onclick="actionKey='7';this.blur();">
+                        <input type="button" class="btnRun small" value="GoL" onclick="actionKey='8';this.blur();">
+                        <input type="button" class="btnRun small" value="Default" onclick="actionKey='9';this.blur();">
+                        <input type="button" class="btnRun small" value="Large" onclick="actionKey='0';this.blur();">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="group-title">Field Operations</div>
+                    <div class="btn-cluster full-width">
+                        <input type="button" class="btnField" value="Random" onclick="actionKey='N';this.blur();"
+                            style="flex:1">
+                        <input type="button" class="btnField" value="Again" onclick="actionKey='M';this.blur();"
+                            style="flex:1">
+                        <input type="button" class="btnField" value="Clear" onclick="actionKey=46;this.blur();"
+                            style="flex:1">
+                    </div>
+                    <div class="btn-cluster full-width" style="margin-top: 4px;">
+                        <input type="button" class="btnField" id="optCenterField" value="Center"
+                            onclick="actionKey=222;this.blur();" style="flex:1">
+                        <input type="button" class="btnField" value="Repeat" onclick="actionKey=224;this.blur();"
+                            style="flex:1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📊 Calculations Panel -->
+        <div id="CalcPanel" class="scrollOut" style="display:none">
+            <div class="scrollIn">
+                <br>
+                <div class="control-group">
+                    <div class="group-title">Space & Time</div>
+                    <div class="info-text-small" style="margin-bottom: 8px;">
+                        <b>Space</b>: Kernel radius = $1 \mu m$ divided into $R$ cells, each cell $\Delta x = 1 / R$
+                        [unit = $\mu m$]<br>
+                        <b>Time</b>: Unit time = $1 \mu s$ divided into $T$ steps, each step $\Delta t = 1 / T$
+                        [unit = $\mu s$]<br>
+                        <b>Mass</b>: Mass density per cell = cell value
+                        <span id="txt_value1">$f(\mathbf x) \in [0,1]$</span>
+                        <span id="txt_value2" style="display:none">$f(\mathbf x) \in [0,\infty)$</span>
+                        <input type="button" class="btnRun small" value="Switch"
+                            title="Switch between limited and unlimited values (alt+G)"
+                            onclick="actionKey=ALT+'G';this.blur();">
+                        [unit = $\mu g / \mu m^2$]
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="group-title">Field Transition: $d(n)$ profile</div>
+                    <div class="info-text-small" style="margin-bottom: 8px;">
+                        $\displaystyle \Delta f(\mathbf x) = d(k \ast f(\mathbf x)) \cdot \Delta t$
+                    </div>
+                    <canvas id="graphD" class="graph" style="height: 100px; width: 100%; margin-bottom: 8px;"></canvas>
+                    <div>
+                        <u>Delta function</u>: <input type="button" class="btnRun small" value="Switch"
+                            title="Switch delta function (alt+Q)" onclick="actionKey=ALT+'Q';this.blur();">
+                        <span id="nameD_gaus" style="display:none"><b>Gaussian</b></span>
+                        <span id="nameD_quad4" style="display:none"><b>polynomial</b></span>
+                        <span id="nameD_trap" style="display:none"><b>trapezoidal</b></span>
+                        <span id="nameD_stpz" style="display:none"><b>step</b></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="group-title">Neighbor Sum & Kernel: $k(\mathbf u)$ profile</div>
+                    <div class="info-text-small" style="margin-bottom: 8px;">
+                        $\displaystyle k \ast f(\mathbf x) = \frac{1}{N} \sum_{|\mathbf u| \leq 1} k(\mathbf u)
+                        f(\mathbf
+                        x + \mathbf u)$
+                    </div>
+                    <div>
+                        <input type="button" class="btnDisplay small" value="+"
+                            title="Increase cap of neighbor sum (alt+R)" onclick="actionKey=ALT+'R';this.blur();">
+                        <input type="button" class="btnDisplay small" value="−"
+                            title="Decrease cap of neighbor sum (alt+T)" onclick="actionKey=ALT+'T';this.blur();">
+                        &nbsp; cap = <span id="txt_NCap" class="num"></span>
+                    </div>
+                    <canvas id="graphK" class="graph"
+                        style="width: 100%; height: 80px; margin: 8px 0; background: rgba(0,0,0,0.2);"></canvas>
+                    <div style="margin-bottom: 4px;">
+                        <u>Kernel layer</u>: <input type="button" class="btnRun small" value="Switch"
+                            title="Switch kernel layer function (alt+W)" onclick="actionKey=ALT+'W';this.blur();">
+                        <span id="nameL_unmo" style="display:none"><b>unimodal</b></span>
+                        <span id="nameL_bimo" style="display:none"><b>bimodal</b></span>
+                        <span id="nameL_trmo" style="display:none"><b>trimodal</b></span>
+                        <span id="nameL_temo" style="display:none"><b>tetramodal</b></span>
+                    </div>
+                    <div>
+                        <u>Kernel core</u>: <input type="button" class="btnRun small" value="Switch"
+                            title="Switch kernel core function (alt+E)" onclick="actionKey=ALT+'E';this.blur();">
+                        <span id="nameC_bump4" style="display:none"><b>Gaussian bump</b></span>
+                        <span id="nameC_quad4" style="display:none"><b>polynomial</b></span>
+                        <span id="nameC_trap1/5" style="display:none"><b>trapezoidal</b></span>
+                        <span id="nameC_stpz1/4" style="display:none"><b>step</b></span>
+                        <span id="nameC_life" style="display:none"><b>high step</b></span>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <input type="button" value="+" class="small" title="Increase stiffness (alt+1)"
+                            onclick="actionKey=INT+1;this.blur();">
+                        <input type="button" value="−" class="small" title="Decrease stiffness (alt+2)"
+                            onclick="actionKey=INT+2;this.blur();">
+                        &nbsp; $\alpha$ = <span id="txt_A" class="num"></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="group-title">Statistics Formulas</div>
+                    <div class="info-text-small">
+                        raw geometric moments: $m_{pq} = \sum_{x,y} x^p y^q f(x, y)$<br>
+                        central moments: $\mu_{pq} = \sum_{x,y} (x-\bar x)^p (y-\bar y)^q f(x, y)$<br>
+                        complex moments: $c_{pq} = \sum_{x,y} (x+iy)^p (x-iy)^q f(x, y)$<br>
+                        mass $m = m_{00}$, centroid $\bar\mathbf x = (\frac{m_{10}}{m_{00}}, \frac{m_{01}}{m_{00}})$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🧊 Cube Panel -->
+        <div id="CubePanel" class="scrollOut" style="display:none">
+            <div class="scrollIn">
+                <br>
+                <div class="control-group">
+                    <div class="group-title">Mark status as:</div>
+                    <div class="btn-cluster" style="display: flex; gap: 4px; flex-wrap: wrap;">
+                        <input type="button" class="btnSoliton" value="Found"
+                            title="Mark current &beta; set as soliton found (P)" onclick="actionKey='P';this.blur();">
+                        <input type="button" class="btnSoliton" value="Missing"
+                            title="Mark current &beta; set as missing i.e. soliton not found (shift+P)"
+                            onclick="actionKey='P';actionShift=true;this.blur();">
+                        <input type="button" class="btnSoliton" value="Empty"
+                            title="Mark current &beta; set as empty i.e. status unknown (alt+P)"
+                            onclick="actionKey=ALT+'P';this.blur();">
+                        <input type="button" class="btnSoliton" value="Empty all"
+                            title="Mark all &beta; sets as empty (alt+Y)" onclick="actionKey=ALT+'Y';this.blur();">
+                        <input type="button" class="btnSoliton" value="Empty&rarr;Missing"
+                            title="Mark all empty &beta; sets as missing (alt+H)"
+                            onclick="actionKey=ALT+'H';this.blur();">
+                    </div>
+                </div>
+                <div style="overflow-x: auto; padding: 4px;">
+                    <table id="CubeTable" class="cubeTable" style="width: 100%;"></table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔭 3D Plot Panel -->
+        <div id="PlotPanel" class="scrollOut" style="display:none">
+            <div class="scrollIn">
+                <br>
+                <div class="control-group">
+                    <div class="group-title">3D Visualization</div>
+                    <div class="btn-cluster" style="display: flex; gap: 4px; flex-wrap: wrap;">
+                        <input type="button" class="btnDisplay small" value="Clear"
+                            title="Clear the 3D surface plot (alt+U)" onclick="actionKey=ALT+'U';this.blur();">
+                        <input type="button" class="btnDisplay small" value="Field"
+                            title="Plot 3D surface of field (alt+I)" onclick="actionKey=ALT+'I';this.blur();">
+                        <input type="button" class="btnDisplay small" value="Delta"
+                            title="Plot 3D surface of delta (alt+O)" onclick="actionKey=ALT+'O';this.blur();">
+                        <input type="button" class="btnDisplay small" value="Neigh"
+                            title="Plot 3D surface of neighbor sum (alt+K)" onclick="actionKey=ALT+'K';this.blur();">
+                        <input type="button" class="btnDisplay small" value="Kernel"
+                            title="Plot 3D surface of kernel (alt+L)" onclick="actionKey=ALT+'L';this.blur();">
+                        <input type="button" class="btnDisplay small" value="Stats"
+                            title="Plot 3D line of stats (alt+J)" onclick="actionKey=ALT+'J';this.blur();">
+                    </div>
+                    <div id="PlotDiv" class="plotDiv"
+                        style="width: 100%; height: 300px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); margin-top: 10px;">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="group-title">Statistics Axes</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 10px;">
+                        <label><input type="checkbox" id="cb0" onclick="StatCheckBox()"> <span>m Mass</span></label>
+                        <label><input type="checkbox" id="cb1" onclick="StatCheckBox()"> <span>g Growth</span></label>
+                        <label><input type="checkbox" id="cb2" onclick="StatCheckBox()"> <span>V Volume</span></label>
+                        <label><input type="checkbox" id="cb3" onclick="StatCheckBox()"> <span>Vg G-Vol</span></label>
+                        <label><input type="checkbox" id="cb4" onclick="StatCheckBox()"> <span>rho (m/V)</span></label>
+                        <label><input type="checkbox" id="cb5" onclick="StatCheckBox()"> <span>rhog
+                                (g/Vg)</span></label>
+                        <label><input type="checkbox" id="cb6" onclick="StatCheckBox()"> <span>s (Speed)</span></label>
+                        <label><input type="checkbox" id="cb7" onclick="StatCheckBox()"> <span>dg (Dist)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📈 Statistics Panel -->
+        <div id="StatPanel" class="scrollOut" style="display:none">
+            <div class="scrollIn">
+                <br>
+                <div class="control-group">
+                    <div class="group-title">Real-time Statistics (Click to top)</div>
+                    <div id="stat_container" style="display: flex; flex-direction: column;">
+                        <!-- Generated by script -->
+                        <div id="s0"></div>
+                        <div id="s1"></div>
+                        <div id="s2"></div>
+                        <div id="s3"></div>
+                        <div id="s4"></div>
+                        <div id="s5"></div>
+                        <div id="s6"></div>
+                        <div id="s7"></div>
+                        <div id="s8"></div>
+                        <div id="s9"></div>
+                        <div id="s10"></div>
+                        <div id="s11"></div>
+                        <div id="s12"></div>
+                        <div id="s13"></div>
+                        <div id="s14"></div>
+                        <div id="s15"></div>
+                        <div id="s16"></div>
+                        <div id="s17"></div>
+                        <div id="s18"></div>
+                        <div id="s19"></div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 10px; opacity: 0.7;">
+                        Period candidates: <span id="txt_periods"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📝 Dynamic Population Script -->
+        <script>
+            (function () {
+                const createRow = (id, label, math) => `
+            <div id="s_tr${id}" class="stat-row" style="display: flex; gap: 8px; align-items: flex-start; padding: 4px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <canvas id="stat${id}" class="stat" style="width: 80px; height: 32px; background: rgba(0,0,0,0.2); flex-shrink: 0; cursor: pointer;" onclick="SelectStatObj(this)"></canvas>
+                <div style="flex-grow: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <span class="param-label" style="font-size: 10px; color: var(--text-dim);">${label}</span>
+                        <span id="val${id}" class="value" style="font-size: 10px; font-weight: 500;"></span>
+                    </div>
+                    <div class="info-text-small" style="font-size: 9px; opacity: 0.5; font-family: var(--font-mono);">${math}</div>
+                </div>
+            </div>`;
+
+                const statData = [
+                    [0, "Mass (m)", "m = sum f / R^2"], [1, "Growth (g)", "g = sum d(n) / R^2"], [2, "Mass Vol (V)", "V = sum 1 / R^2"], [3, "Grow Vol (Vg)", "Vg = sum [d(n)>0] / R^2"],
+                    [4, "Mass Den (rho)", "rho = m / V"], [5, "Grow Den (rhog)", "rhog = g / Vg"], [6, "Speed (s)", "s = (|delta x| / R) / delta t"], [7, "Dist (dg)", "dg = |xg - xm| / R"],
+                    [8, "Rot (omega)", "omega"], [9, "Rot G (omegag)", "omegag"], [10, "Rot Angle (omegat)", "omegat"],
+                    [11, "Inertia (I)", "I"], [12, "Skew (gamma)", "gamma"], [13, "Hu 5", "phi5"], [14, "Hu 6", "phi6"], [15, "Hu 7", "phi7"],
+                    [16, "Kurtosis (kappa)", "kappa"], [17, "Flush 8", "psi8"], [18, "Flush 9", "psi9"], [19, "Flush 10", "psi10"]
+                ];
+
+                statData.forEach(d => {
+                    const container = document.getElementById('s' + d[0]);
+                    if (container) {
+                        container.outerHTML = createRow(d[0], d[1], d[2]);
+                    }
+                });
+
+                const sync = (srcId, dstId) => {
+                    const src = document.getElementById(srcId);
+                    const dst = document.getElementById(dstId);
+                    if (src && dst) {
+                        const observer = new MutationObserver(() => { dst.innerHTML = src.innerHTML; });
+                        observer.observe(src, { childList: true });
+                        dst.innerHTML = src.innerHTML;
+                    };
+                };
+                sync("txt_c", "txt_c_ctrl");
+                sync("txt_w", "txt_w_ctrl");
+                sync("txt_R", "txt_R_ctrl");
+                sync("txt_ts", "txt_ts_ctrl");
+            })();
+        </script>
+    </div> <!-- End dynamic-content -->
+    <div id="layout-controls-content" style="display:none"></div>
+</div> <!-- End layout-controls -->

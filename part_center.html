@@ -1,0 +1,38 @@
+<div id="layout-main">
+    <div class="canvas-container">
+        <table cellpadding=1 cellspacing=0>
+            <tr>
+                <td id="canvas1td2">Field = $\color{magenta}f(\mathbf x)$</td>
+                <td id="canvas2td2">
+                    <span id="panel2_1">Delta = $\color{magenta}d(\color{magenta}{k \ast f}(\mathbf x))$</span>
+                    <span id="panel2_2" style="display:none;">Period (arrow = overall)</span>
+                </td>
+            </tr>
+            <tr>
+                <td id="canvas1td1"><canvas id="canvas1" class="field" onclick="actionKey=ALT+'F'"></canvas></td>
+                <td id="canvas2td1"><canvas id="canvas2" class="field" onclick="actionKey=ALT+'F'"></canvas></td>
+            </tr>
+            <tr>
+                <td id="canvas3td1"><canvas id="canvas3" class="field" onclick="actionKey=ALT+'F'"></canvas></td>
+                <td id="canvas4td1"><canvas id="canvas4" class="field" onclick="actionKey=ALT+'F'"></canvas></td>
+            </tr>
+            <tr>
+                <td id="canvas3td2">
+                    <span id="panel3_1">Neighbor sum = $\color{magenta}{k \ast f}(\mathbf x)$</span>
+                    <span id="panel3_2" style="display:none;">Average</span>
+                </td>
+                <td id="canvas4td2">
+                    <span id="panel4_1">Kernel = $\color{magenta}k(\mathbf u)$</span>
+                    <span id="panel4_2" style="display:none;">Value</span>
+                </td>
+            </tr>
+            <tr>
+                <td><canvas id="canvasT" class="field" style="display:none;"></canvas></td>
+            </tr>
+        </table>
+
+        <div id="txt_status" class="status"></div>
+        <textarea id="copyArea"></textarea>
+        <div id="txt_debug"></div>
+    </div>
+</div>
